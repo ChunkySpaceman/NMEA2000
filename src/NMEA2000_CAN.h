@@ -96,6 +96,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_MBED_CAN 6
 #define USE_N2K_ESP32_CAN 7
 #define USE_N2K_TEENSYX_CAN 8
+#define USE_N2K_SAME5X_CAN 9
 
 
 // Select right CAN according to prosessor
@@ -121,6 +122,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_CAN USE_N2K_ESP32_CAN
 #elif defined(__IMXRT1062__)
 #define USE_N2K_CAN USE_N2K_TEENSYX_CAN
+#elif defined(ADAFRUIT_FEATHER_M4_CAN)
+#define USE_N2K_CAN USE_N2K_SAME5X_CAN
 #else
 #define USE_N2K_CAN USE_N2K_MCP_CAN
 #endif
@@ -171,6 +174,10 @@ tmbedStream serStream;
 #elif USE_N2K_CAN == USE_N2K_ESP32_CAN
 #include <NMEA2000_esp32.h>       // https://github.com/ttlappalainen/NMEA2000_esp32
 tNMEA2000 &NMEA2000=*(new tNMEA2000_esp32());
+
+#elif USE_N2K_CAN == USE_N2K_SAME5X_CAN
+#include <NMEA2000_SAME5X.h>       // https://github.com/ChunkySpaceman/NMEA2000_SAME5X
+tNMEA2000 &NMEA2000=*(new tNMEA2000_SAME5X());
 
 #else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip
